@@ -24,42 +24,31 @@ che hanno un voto di tre stelle o superiore) Se non viene specificato nessun fil
 <body>
     <h1>PHP Hotels</h1>
     <table class="table">
-        <tbody>
+        <thead>
             <tr>
-                <th scope="row">Name</th>
-                <?php foreach ($hotels as $hotel) { ?>
+                <th scope="col">Nome</th>
+                <th scope="col">Voto</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Distanza dal centro</th>
+                <th scope="col">Parcheggio</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php foreach ($hotels as $hotel) { ?>
+                <tr>
                     <td>
                         <?php echo $hotel['name'] ?>
                     </td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <th scope="row">Voto</th>
-                <?php foreach ($hotels as $hotel) { ?>
                     <td>
                         <?php echo $hotel['vote'] ?>
                     </td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <th scope="row">Descrizione</th>
-                <?php foreach ($hotels as $hotel) { ?>
                     <td>
                         <?php echo $hotel['description'] ?>
                     </td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <th scope="row">Distanza dal centro</th>
-                <?php foreach ($hotels as $hotel) { ?>
                     <td>
                         <?php echo $hotel['distance_to_center'] ?>
                     </td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <th scope="row">Parcheggio</th>
-                <?php foreach ($hotels as $hotel) { ?>
                     <td>
                         <?php if ($hotel['parking'] == true) {
                             echo 'Disponibile';
@@ -68,8 +57,9 @@ che hanno un voto di tre stelle o superiore) Se non viene specificato nessun fil
                         }
                         ?>
                     </td>
-                <?php } ?>
-            </tr>
+                </tr>
+            <?php } ?>
+
         </tbody>
     </table>
 </body>
