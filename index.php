@@ -9,7 +9,31 @@ Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto 
 NOTA:
 deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e
 che hanno un voto di tre stelle o superiore) Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel. -->
-<?php include __DIR__ . '/db.php' ?>
+<?php include __DIR__ . '/db.php';
+$hotelsWithPark = [];
+$hotelsWithoutPark = [];
+
+foreach ($hotels as $key => $hotel) {
+    if ($hotel['parking'] == true) {
+        $hotelsWithPark[] = $hotel;
+    } else {
+        $hotelsWithoutPark[] = $hotel;
+    }
+};
+
+$parking = isset($_GET['parking']) ? $_GET['parking'] : 'all';
+
+if ( $parking == 'withPark') {
+    $hotels = $hotelsWithPark;
+
+} else if ($parking == 'withoutPark') {
+    $hotels = $hotelsWithoutPark;
+
+} else {
+    $hotels = $hotels;
+}
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -23,6 +47,16 @@ che hanno un voto di tre stelle o superiore) Se non viene specificato nessun fil
 
 <body>
     <h1>PHP Hotels</h1>
+    <form action="./index.php" method="get">
+        <p>Selezionare preferenza parcheggio</p>
+        <input type="radio" id="all" name="parking" value="all">
+        <label for="all">Mostra tutti</label><br>
+        <input type="radio" id="withPark" name="parking" value="withPark">
+        <label for="withPark">Con Parcheggio</label><br>
+        <input type="radio" id="withoutPark" name="parking" value="withoutPark">
+        <label for="withoutPark">Senza Parcheggio</label><br>
+        <button class="btn btn-primary" type="submit">Invia</button>
+    </form>
     <table class="table">
         <thead>
             <tr>
