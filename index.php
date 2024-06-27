@@ -23,16 +23,26 @@ foreach ($hotels as $key => $hotel) {
 
 $parking = isset($_GET['parking']) ? $_GET['parking'] : 'all';
 
-if ( $parking == 'withPark') {
+if ($parking == 'withPark') {
     $hotels = $hotelsWithPark;
-
 } else if ($parking == 'withoutPark') {
     $hotels = $hotelsWithoutPark;
-
 } else {
     $hotels = $hotels;
-}
+};
 
+$vote = isset($_GET['vote']) ? $_GET['vote'] : '1';
+
+
+if (0 < $vote && $vote <= 5) {
+    $hotelsRated = [];
+    foreach ($hotels as $key => $hotel) {
+        if ($hotel['vote'] >= $vote) {
+            $hotelsRated[] = $hotel;
+        }
+    }
+    $hotels = $hotelsRated;
+}
 ?>
 
 <!doctype html>
@@ -47,16 +57,23 @@ if ( $parking == 'withPark') {
 
 <body>
     <h1>PHP Hotels</h1>
-    <form action="./index.php" method="get">
-        <p>Selezionare preferenza parcheggio</p>
-        <input type="radio" id="all" name="parking" value="all">
-        <label for="all">Mostra tutti</label><br>
-        <input type="radio" id="withPark" name="parking" value="withPark">
-        <label for="withPark">Con Parcheggio</label><br>
-        <input type="radio" id="withoutPark" name="parking" value="withoutPark">
-        <label for="withoutPark">Senza Parcheggio</label><br>
-        <button class="btn btn-primary" type="submit">Invia</button>
+    <form class="mb-5" action="./index.php" method="get">
+        <section class="mb-3">
+            <p class="fw-bold mb-2">Selezionare preferenza parcheggio</p>
+            <input type="radio" id="all" name="parking" value="all">
+            <label for="all">Mostra tutti</label><br>
+            <input type="radio" id="withPark" name="parking" value="withPark">
+            <label for="withPark">Con Parcheggio</label><br>
+            <input type="radio" id="withoutPark" name="parking" value="withoutPark">
+            <label for="withoutPark">Senza Parcheggio</label><br>
+        </section>
+        <section class="mb-3">
+            <p class="fw-bold mb-2">Selezionare preferenza voto hotel</p>
+            <input type="text" name="vote" placeholder="inserisci un numero da 1 a 5"><br>
+            <button class="btn btn-primary mt-2" type="submit">Filtra</button>
+        </section>
     </form>
+
     <table class="table">
         <thead>
             <tr>
